@@ -19,7 +19,7 @@ const Word: React.FC<WordProps> = ({ word = 'defaultWord', onFinish, isStart, wo
   const [isFinish, setIsFinish] = useState(false)
   const [hasWrong, setHasWrong] = useState(false)
   const [playKeySound, playBeepSound, playHintSound] = useSounds()
-  const { pronunciation } = useAppState()
+  const { pronunciation, wrongReStart } = useAppState()
 
   const onKeydown = useCallback(
     (e) => {
@@ -62,15 +62,18 @@ const Word: React.FC<WordProps> = ({ word = 'defaultWord', onFinish, isStart, wo
     if (hasWrong) {
       playBeepSound()
       const timer = setTimeout(() => {
-        setInputWord('')
-        setHasWrong(false)
+        // 输入错误是否重新开始
+        if (wrongReStart) {
+          setInputWord('')
+          setHasWrong(false)
+        }
       }, 300)
 
       return () => {
         clearTimeout(timer)
       }
     }
-  }, [hasWrong, isFinish, playBeepSound])
+  }, [hasWrong, isFinish, playBeepSound, wrongReStart])
 
   useLayoutEffect(() => {
     let hasWrong = false,
@@ -98,10 +101,10 @@ const Word: React.FC<WordProps> = ({ word = 'defaultWord', onFinish, isStart, wo
   const playWordSound = pronunciation !== false
 
   return (
-    <div className="flex justify-center pt-4 pb-1">
-      <div className="relative">
-        <div className={`flex items-center justify-center ${hasWrong ? style.wrong : ''}`}>
-          {/* {console.log(inputWord, word)} */}
+    <div className="pt-4 pb-1">
+      <div className="relative" style={{ width: '100%', height: '400px', overflowX: 'hidden', overflowY: 'scroll' }}>
+        <div className={`${hasWrong ? style.wrong : ''}`}>
+          {/*{console.log(inputWord, word)}*/}
           {word.split('').map((t, index) => {
             return (
               <Letter

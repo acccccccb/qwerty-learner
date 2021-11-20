@@ -19,7 +19,11 @@ const stateClassNameMap: Record<string, Record<LetterState, string>> = {
 
 const Letter: React.FC<LetterProps> = ({ letter, state = 'normal', visible }) => (
   <span
-    className={`m-0 p-0 text-5xl font-mono font-normal ${
+    style={{
+      float: 'left',
+      marginBottom: '30px',
+    }}
+    className={`m-0 p-0 text-4xl font-mono font-normal ${
       stateClassNameMap[((letter === EXPLICIT_SPACE) as unknown) as string][state]
     } pr-0.8 duration-0 dark:text-opacity-80`}
   >

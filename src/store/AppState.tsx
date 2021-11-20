@@ -32,6 +32,7 @@ export type AppState = {
    * Whether dark mode is enabled
    */
   darkMode: boolean
+  wrongReStart: boolean
 }
 
 export type AppStateData = {
@@ -113,6 +114,17 @@ export function useDarkMode(): [darkMode: boolean, setDarkMode: (state: boolean)
   return [state.darkMode, setDarkMode]
 }
 
+export function useSetWrongReStart(): [wrongReStart: boolean, setWrongReStart: (state: boolean) => void] {
+  const { state, dispatch } = useContext(AppStateContext)
+  const setWrongReStart = useCallback(
+    (wrongReStart: boolean) => {
+      dispatch({ ...state, wrongReStart })
+    },
+    [state, dispatch],
+  )
+
+  return [state.wrongReStart, setWrongReStart]
+}
 const defaultState: AppState = {
   sound: true,
   dictionaries,
@@ -120,6 +132,7 @@ const defaultState: AppState = {
   pronunciation: 'us',
   selectedChapter: 0,
   darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
+  wrongReStart: false,
 }
 
 export const AppStateProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {

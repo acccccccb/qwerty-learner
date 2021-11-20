@@ -27,6 +27,14 @@ const Switcher: React.FC<SwitcherPropsType> = ({ state, dispatch }) => {
     [dispatch],
   )
   useHotkeys(
+    'ctrl+r',
+    (e) => {
+      e.preventDefault()
+      dispatch('wrongReStart')
+    },
+    [dispatch],
+  )
+  useHotkeys(
     'ctrl+p',
     (e) => {
       e.preventDefault()
@@ -76,6 +84,17 @@ const Switcher: React.FC<SwitcherPropsType> = ({ state, dispatch }) => {
           }}
         >
           <FontAwesomeIcon icon="assistive-listening-systems" fixedWidth />
+        </button>
+      </Tooltip>
+      <Tooltip content="输入错误是否重新开始（Ctrl + R）">
+        <button
+          className={`${state.wrongReStart ? 'text-indigo-400' : 'text-gray-400'} text-lg focus:outline-none`}
+          onClick={(e) => {
+            dispatch('wrongReStart')
+            e.currentTarget.blur()
+          }}
+        >
+          <FontAwesomeIcon icon={state.wrongReStart ? 'cat' : 'cat'} fixedWidth />
         </button>
       </Tooltip>
       <Tooltip content="开关深色模式（Ctrl + D）">
