@@ -193,7 +193,7 @@ const App: React.FC = () => {
             <div className="container h-full relative flex mx-auto flex-col items-center">
               <div className="h-1/3"></div>
               {!isStart && <h3 className="pb-4 text-xl text-gray-600 dark:text-gray-50 animate-pulse">按任意键开始</h3>}
-              {!isStart && (
+              {isStart && (
                 <div style={{ width: '100%' }}>
                   <Word
                     key={`word-${wordList.words[order].name}-${order}`}
